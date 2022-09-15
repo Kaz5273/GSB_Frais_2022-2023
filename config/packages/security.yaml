@@ -17,15 +17,16 @@ security:
             lazy: true
             provider: app_user_provider
 
+            login_throttling:
+                max_attempts: 3
+
             form_login:
                 login_path: app_login
                 check_path: app_login
                 default_target_path: app_login
-                always_use_default_target_path: true
-                use_referer: true
-                failure_path: app_login
-                target_path_parameter: go_to
-                failure_path_parameter: back_to
+
+            logout:
+                path: app_logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
