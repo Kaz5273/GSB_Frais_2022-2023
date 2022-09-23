@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>idEtat</th>
+>
                 <th>Libelle</th>
                 <th>actions</th>
             </tr>
@@ -18,7 +18,6 @@
         {% for etat in etats %}
             <tr>
                 <td>{{ etat.id }}</td>
-                <td>{{ etat.idEtat }}</td>
                 <td>{{ etat.libelle }}</td>
                 <td>
                     <a href="{{ path('app_etat_show', {'id': etat.id}) }}">show</a>

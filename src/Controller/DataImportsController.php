@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\FicheFrais;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
@@ -63,7 +64,13 @@ class DataImportsController extends AbstractController
             $newFicheFrais->setMois($ficheFrais->mois);
             $newFicheFrais->setMontant($ficheFrais->montantValide);
             $newFicheFrais->setDateModif(new \DateTime($ficheFrais->dateModif));
-            $newFicheFrais->setEtat($ficheFrais->idEtat);
+            //$etat = $doctrine->getRepository(Etat::class)->findOneBy(['idEtat' => $fichefrais->idEtat]);
+            switch ($fichefrais->idEtat)
+            {
+                case 'RB':
+                    $etat = $doctrine->getRepository(Etat::class)->find(3);
+            }
+
 
 
 

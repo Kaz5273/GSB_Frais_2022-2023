@@ -21,8 +21,7 @@ class Etat
     #[ORM\OneToMany(mappedBy: 'Etat', targetEntity: FicheFrais::class, orphanRemoval: true)]
     private Collection $ficheFrais;
 
-    #[ORM\Column(length: 10)]
-    private ?string $idEtat = null;
+
 
     public function __construct()
     {
@@ -76,15 +75,5 @@ class Etat
         return $this;
     }
 
-    public function getIdEtat(): ?string
-    {
-        return $this->idEtat;
-    }
 
-    public function setIdEtat(string $idEtat): self
-    {
-        $this->idEtat = $idEtat;
-
-        return $this;
-    }
 }
