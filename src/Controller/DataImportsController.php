@@ -54,36 +54,38 @@ class DataImportsController extends AbstractController
 
         $file = './fichefrais.json';
         $data = file_get_contents($file);
-        $fichefrais = json_decode($data);
+        $fichesfrais = json_decode($data);
 
 
-        foreach($fichefrais as $ficheFrais) {
+        foreach($fichesfrais as $ficheFrais) {
             $newFicheFrais = new FicheFrais();
             $user = $doctrine->getRepository(User::class)->findOneBy(['oldId' => $ficheFrais->idVisiteur]);
             $newFicheFrais->setUser($user);
             $newFicheFrais->setMois($ficheFrais->mois);
             $newFicheFrais->setMontant($ficheFrais->montantValide);
             $newFicheFrais->setDateModif(new \DateTime($ficheFrais->dateModif));
-            //$etat = $doctrine->getRepository(Etat::class)->findOneBy(['idEtat' => $fichefrais->idEtat]);
-            switch ($fichefrais->idEtat)
+            $newFicheFrais->setNbJustificatifs($ficheFrais->nbJustificatifs);
+
+            switch ($ficheFrais->idEtat)
             {
+                case 'CL':
+                    $etat = $doctrine->getRepository(Etat::class)->find(1);
+                    break;
+                case 'CR':
+                    $etat = $doctrine->getRepository(Etat::class)->find(2);
+                    break;
                 case 'RB':
                     $etat = $doctrine->getRepository(Etat::class)->find(3);
+                    break;
+                case 'VA':
+                    $etat = $doctrine->getRepository(Etat::class)->find(4);
+                    break;
+
+
             }
-
-
-
-
-
-
-//            $plaintextpassword = $user->mdp; //on stocke le mot de passe en clair dans une variable
-//            $hashedpassword = $passwordHasher->hashPassword($newUser, $plaintextpassword); //on hache le mot de passe
-//            //grace à la méthode hashPassword()
-//            $newUser->setPassword($hashedpassword); //j'affecte le mot de passe haché à l'attribut Password de mon objet
-//
-//            //Faire persister l'objet créé = l'enregistrer en base de données gràce à l'ORM Doctrine
-//            $doctrine->getManager()->persist($newUser); //je fais persister l'objet $newUser en base de données
-//            $doctrine->getManager()->flush();
+            $newFicheFrais->setEtat($etat);
+            $doctrine->getManager()->persist($newFicheFrais); //je fais persister l'objet $newUser en base de données
+            $doctrine->getManager()->flush();
         }
         return $this->render('data_imports/index.html.twig', [
             'controller_name' => 'DataImportsController',

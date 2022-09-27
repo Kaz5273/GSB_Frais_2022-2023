@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FicheFraisRepository::class)]
 
-class FicheFrais extends Etat
+class FicheFrais
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -37,8 +37,6 @@ class FicheFrais extends Etat
     #[ORM\ManyToOne(inversedBy: 'ficheFrais')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $Etat = null;
-
-
 
     #[ORM\Column(length: 255)]
     private ?string $mois = null;

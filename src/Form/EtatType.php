@@ -13,8 +13,6 @@ class EtatType extends AbstractType
     {
         $builder
             ->add('libelle')
-            ->add('idEtat')
-
         ;
     }
 
