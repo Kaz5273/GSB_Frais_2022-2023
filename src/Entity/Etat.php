@@ -18,7 +18,7 @@ class Etat
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'Etat', targetEntity: FicheFrais::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'etat', targetEntity: FicheFrais::class, orphanRemoval: true)]
     private Collection $ficheFrais;
 
 

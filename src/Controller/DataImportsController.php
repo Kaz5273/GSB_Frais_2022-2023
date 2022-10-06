@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\FicheFrais;
+use App\Entity\FraisForfait;
+use App\Entity\LigneFraisForfait;
+use App\Entity\LigneFraisHorsForfait;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -91,4 +94,100 @@ class DataImportsController extends AbstractController
             'controller_name' => 'DataImportsController',
         ]);
     }
+
+    #[Route('/dataimportslignefraisforfait', name: 'app_data_importslignefraisforfait')]
+    public function index3(ManagerRegistry $doctrine): Response
+    {
+
+
+        $file = './lignefraisforfait.json';
+        $data = file_get_contents($file);
+        $lignefraisforfait = json_decode($data);
+
+
+        foreach($lignefraisforfait as $LigneFraisForfait) {
+            $newLigneFraisForfait = new LigneFraisForfait();
+            $user = $doctrine->getRepository(User::class)->findOneBy(['oldId' => $LigneFraisForfait->idVisiteur]);
+            $ficheFrais = $doctrine->getRepository(FicheFrais::class)->findOneBy(['user' => $user, 'mois' => $LigneFraisForfait->mois]);
+            $newLigneFraisForfait->setFicheFrais($ficheFrais);
+
+            switch ($LigneFraisForfait->idFraisForfait)
+            {
+                case 'ETP':
+                    $frais = $doctrine->getRepository(FraisForfait::class)->find(1);
+                    break;
+                case 'KM':
+                    $frais = $doctrine->getRepository(FraisForfait::class)->find(2);
+                    break;
+                case 'NUI':
+                    $frais = $doctrine->getRepository(FraisForfait::class)->find(3);
+                    break;
+                case 'REP':
+                    $frais = $doctrine->getRepository(FraisForfait::class)->find(4);
+                    break;
+            }
+            $newLigneFraisForfait->setFraisForfait($frais);
+            $newLigneFraisForfait->setQuantite($LigneFraisForfait->quantite);
+            $doctrine->getManager()->persist($newLigneFraisForfait); //je fais persister l'objet $newUser en base de données
+            $doctrine->getManager()->flush();
+        }
+
+        return $this->render('data_imports/index.html.twig', [
+            'controller_name' => 'DataImportsController',
+        ]);
+    }
+
+    #[Route('/dataimportslignefraishorsforfait', name: 'app_data_importslignefraisforfait')]
+    public function index4(ManagerRegistry $doctrine): Response
+    {
+
+
+        $file = './lignefraishorsforfait.json';
+        $data = file_get_contents($file);
+        $lignefraishorsforfait = json_decode($data);
+
+
+        foreach($lignefraishorsforfait as $LigneFraisHorsForfait) {
+            $newLigneFraisHorsForfait = new LigneFraisHorsForfait();
+            $user = $doctrine->getRepository(User::class)->findOneBy(['oldId' => $LigneFraisHorsForfait->idVisiteur]);
+            $ficheFrais = $doctrine->getRepository(FicheFrais::class)->findOneBy(['user' => $user, 'mois' => $LigneFraisHorsForfait->mois]);
+            $newLigneFraisHorsForfait->setFicheFrais($ficheFrais);
+            $newLigneFraisHorsForfait->setLibelle($LigneFraisHorsForfait->libelle);
+            $newLigneFraisHorsForfait->setMontant($LigneFraisHorsForfait->montant);
+            $newLigneFraisHorsForfait->setDate(new \DateTime($LigneFraisHorsForfait->date));
+
+            $doctrine->getManager()->persist($newLigneFraisHorsForfait); //je fais persister l'objet $newUser en base de données
+            $doctrine->getManager()->flush();
+
+        }
+
+        return $this->render('data_imports/index.html.twig', [
+            'controller_name' => 'DataImportsController',
+        ]);
+    }
+//
+//
+//
+//    #[Route('/dataimportsfraisforfait', name: 'app_data_importsfraisforfait')]
+//    public function index5(ManagerRegistry $doctrine): Response
+//    {
+//
+//
+//        $file = './fraisforfait.json';
+//        $data = file_get_contents($file);
+//        $fraisforfait = json_decode($data);
+//
+//
+//        foreach($fraisforfait as $FraisForfait) {
+//           $newFraisForfait = new FraisForfait();
+//
+//           $newFraisForfait->setLibelle($FraisForfait->libelle);
+//           $newFraisForfait->setMontant($FraisForfait->montant);
+//            var_dump($newFraisForfait);
+//        }
+//
+//        return $this->render('data_imports/index.html.twig', [
+//            'controller_name' => 'DataImportsController',
+//        ]);
+//    }
 }

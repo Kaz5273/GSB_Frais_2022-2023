@@ -36,7 +36,7 @@ class FicheFrais
 
     #[ORM\ManyToOne(inversedBy: 'ficheFrais')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Etat $Etat = null;
+    private ?Etat $etat = null;
 
     #[ORM\Column(length: 255)]
     private ?string $mois = null;
@@ -109,12 +109,12 @@ class FicheFrais
 
     public function getEtat(): ?Etat
     {
-        return $this->Etat;
+        return $this->etat;
     }
 
-    public function setEtat(?Etat $Etat): self
+    public function setEtat(?Etat $etat): self
     {
-        $this->Etat = $Etat;
+        $this->etat = $etat;
 
         return $this;
     }

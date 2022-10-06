@@ -18,7 +18,7 @@ class LigneFraisForfait
 
     #[ORM\ManyToOne(inversedBy: 'ligneFraisForfaits')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?FicheFrais $FicheFrais = null;
+    private ?FicheFrais $ficheFrais = null;
 
     #[ORM\ManyToOne(inversedBy: 'ligneFraisForfait')]
     #[ORM\JoinColumn(nullable: false)]
@@ -43,12 +43,12 @@ class LigneFraisForfait
 
     public function getFicheFrais(): ?FicheFrais
     {
-        return $this->FicheFrais;
+        return $this->ficheFrais;
     }
 
-    public function setFicheFrais(?FicheFrais $FicheFrais): self
+    public function setFicheFrais(?FicheFrais $ficheFrais): self
     {
-        $this->FicheFrais = $FicheFrais;
+        $this->ficheFrais = $ficheFrais;
 
         return $this;
     }
