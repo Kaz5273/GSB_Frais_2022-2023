@@ -6,37 +6,43 @@
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card rounded-3 bg-dark text-white" style="border-radius: 2rem;">
+                        <div class="card-body p-5 text-center">
 
-<div class="col">
-    <h1>Connexion GSB-FRAIS</h1>
-    <form action="{{ path('app_login') }}" method="post">
-        <div class="row m-3">
-            <div class="col-4">
-                <label class="form-label" for="username">Identifiant</label>
-                <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
+                            <div class="mb-md-5 mt-md-4 pb-5">
+                                <form action="{{ path('app_login') }}" method="post">
+
+                                    <h2 class="fw-bold mb-2 text-uppercase text-white">GSB-Frais</h2>
+                                    <p class="text-white-50 mb-5">Please enter your login and password!</p>
+
+                                    <div class="form-outline form-white mb-4">
+
+                                        <input class="form-control form-control-lg" type="text" id="username" name="_username" value="{{ last_username }}"/>
+                                        <label class="form-label" for="username">Identifiant</label>
+                                    </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <input class="form-control form-control-lg" type="password" id="password" name="_password"/>
+                                        <label class="form-label" for="password">Mot de passe</label>
+                                    </div>
+
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Connexion</button>
+                                    {# If you want to control the URL the user is redirected to on success
+                                     <input type="hidden" name="_target_path" value="/account"/> #}
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row m-3">
-            <div class="col-4">
-                <label class="form-label" for="password">Mot de passe</label>
-                <input class="form-control" type="password" id="password" name="_password"/>
-            </div>
-        </div>
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <div class="row m-3">
-            <div class="col-4">
-                <button class="btn btn-primary" type="submit">Connexion</button>
-            </div>
-        </div>
-
-
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"/> #}
-
-    </form>
-</div>
-
+    </section>
 
 {% endblock %}

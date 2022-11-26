@@ -109,7 +109,8 @@ class DataImportsController extends AbstractController
             $newLigneFraisForfait = new LigneFraisForfait();
             $user = $doctrine->getRepository(User::class)->findOneBy(['oldId' => $LigneFraisForfait->idVisiteur]);
             $ficheFrais = $doctrine->getRepository(FicheFrais::class)->findOneBy(['user' => $user, 'mois' => $LigneFraisForfait->mois]);
-            $newLigneFraisForfait->setFicheFrais($ficheFrais);
+            $newLigneFraisForfait->setQuantite($LigneFraisForfait->quantite);
+
 
             switch ($LigneFraisForfait->idFraisForfait)
             {
@@ -127,7 +128,7 @@ class DataImportsController extends AbstractController
                     break;
             }
             $newLigneFraisForfait->setFraisForfait($frais);
-            $newLigneFraisForfait->setQuantite($LigneFraisForfait->quantite);
+            $newLigneFraisForfait->setFicheFrais($ficheFrais);
             $doctrine->getManager()->persist($newLigneFraisForfait); //je fais persister l'objet $newUser en base de données
             $doctrine->getManager()->flush();
         }
@@ -165,29 +166,4 @@ class DataImportsController extends AbstractController
             'controller_name' => 'DataImportsController',
         ]);
     }
-//
-//
-//
-//    #[Route('/dataimportsfraisforfait', name: 'app_data_importsfraisforfait')]
-//    public function index5(ManagerRegistry $doctrine): Response
-//    {
-//
-//
-//        $file = './fraisforfait.json';
-//        $data = file_get_contents($file);
-//        $fraisforfait = json_decode($data);
-//
-//
-//        foreach($fraisforfait as $FraisForfait) {
-//           $newFraisForfait = new FraisForfait();
-//
-//           $newFraisForfait->setLibelle($FraisForfait->libelle);
-//           $newFraisForfait->setMontant($FraisForfait->montant);
-//            var_dump($newFraisForfait);
-//        }
-//
-//        return $this->render('data_imports/index.html.twig', [
-//            'controller_name' => 'DataImportsController',
-//        ]);
-//    }
 }
