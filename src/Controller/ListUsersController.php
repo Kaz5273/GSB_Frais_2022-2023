@@ -16,8 +16,6 @@ class ListUsersController extends AbstractController
 
         $repository = $doctrine->getRepository(User::class);
         $users = $repository->findAll();
-
-
         return $this->render('list_users/index.html.twig', [
             'users' => $users,
         ]);
