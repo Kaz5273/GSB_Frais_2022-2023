@@ -138,7 +138,7 @@ class DataImportsController extends AbstractController
         ]);
     }
 
-    #[Route('/dataimportslignefraishorsforfait', name: 'app_data_importslignefraisforfait')]
+    #[Route('/dataimportslignefraishorsforfait', name: 'app_data_importslignefraishorsforfait')]
     public function index4(ManagerRegistry $doctrine): Response
     {
 
