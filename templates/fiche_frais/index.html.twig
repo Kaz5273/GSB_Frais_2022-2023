@@ -10,12 +10,13 @@
 
 <div class="example-wrapper">
     <h1>Liste des FicheFrais</h1>
+    
 
-    This friendly message is coming from:
     <ul>
-
         {% for fichefrais in fichesfrais %}
-            <li>{{ fichefrais.dateModif |date('y-M-d') }} - {{ fichefrais.montant }}</li>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li>{{ fichefrais.user.nom }} / {{ fichefrais.dateModif |date('Y-m-j') }} / {{ fichefrais.montant }} / {{ fichefrais.mois }} / {{ fichefrais.etat.libelle }}</li>
+            {% endif %}
         {% endfor %}
         {#        <li>Your controller at <code><a href="{{ 'C:/Symfony/GSB_Frais/src/Controller/ListUsersController.php'|file_link(0) }}">src/Controller/ListUsersController.php</a></code></li>#}
         {#        <li>Your template at <code><a href="{{ 'C:/Symfony/GSB_Frais/templates/list_users/index.html.twig'|file_link(0) }}">templates/list_users/index.html.twig</a></code></li>#}

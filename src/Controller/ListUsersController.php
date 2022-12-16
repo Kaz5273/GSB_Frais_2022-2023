@@ -13,7 +13,6 @@ class ListUsersController extends AbstractController
     #[Route('/listusers', name: 'app_list_users')]
     public function index(ManagerRegistry $doctrine): Response
     {
-
         $repository = $doctrine->getRepository(User::class);
         $users = $repository->findAll();
         return $this->render('list_users/index.html.twig', [
