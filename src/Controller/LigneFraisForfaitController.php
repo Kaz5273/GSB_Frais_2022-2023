@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\LigneFraisForfait;
 use App\Entity\LigneFraisHorsForfait;
 
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,7 +18,7 @@ class LigneFraisForfaitController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
 
-        $repository = $doctrine->getRepository(LigneFraisHorsForfait::class);
+        $repository = $doctrine->getRepository(LigneFraisForfait::class);
         $lignesFraisForfait = $repository->findBy(['ficheFrais' => $user]);
         return
             $this->render('ligne_frais_forfait/index.html.twig.', [

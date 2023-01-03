@@ -10,16 +10,43 @@
 
 <div class="example-wrapper">
     <h1>Liste des FicheFrais</h1>
-    
 
-    <ul>
-        {% for fichefrais in fichesfrais %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <li>{{ fichefrais.user.nom }} / {{ fichefrais.dateModif |date('Y-m-j') }} / {{ fichefrais.montant }} / {{ fichefrais.mois }} / {{ fichefrais.etat.libelle }}</li>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <td scope="col">#</td>
+                        <th scope="col">Date modifié</th>
+                        <th scope="col">Monant</th>
+                        <th scope="col">Mois</th>
+                        <th scope="col">Libelle</th>
+                    </tr>
+                    </thead>
+                    {% for fichefrais in fichesfrais %}
+
+                    <tbody>
+                    <tr>
+                        <th scope="row"><a href="{{ path('app_ligne_frais_forfait') }}">{{ fichefrais.id }}</a></th>
+                            <td>{{ fichefrais.dateModif |date('Y-m-j') }}</td>
+                            <td>{{ fichefrais.montant }}</td>
+                            <td>{{ fichefrais.mois }}</td>
+                            <td>{{ fichefrais.etat.libelle }}</td>
+
+                    </tr>
+                    </tbody>
+
+{#                       {{ dump(fichefrais.lignefraishorsforfait) }}#}
+
+                    {% endfor %}
+                </table>
+
+
+{#            <li>{{ fichefrais.user.nom }} / {{ fichefrais.dateModif |date('Y-m-j') }} / {{ fichefrais.montant }} / {{ fichefrais.mois }} / {{ fichefrais.etat.libelle }}</li>#}
             {% endif %}
-        {% endfor %}
+
         {#        <li>Your controller at <code><a href="{{ 'C:/Symfony/GSB_Frais/src/Controller/ListUsersController.php'|file_link(0) }}">src/Controller/ListUsersController.php</a></code></li>#}
         {#        <li>Your template at <code><a href="{{ 'C:/Symfony/GSB_Frais/templates/list_users/index.html.twig'|file_link(0) }}">templates/list_users/index.html.twig</a></code></li>#}
-    </ul>
 </div>
+
+
 {% endblock %}

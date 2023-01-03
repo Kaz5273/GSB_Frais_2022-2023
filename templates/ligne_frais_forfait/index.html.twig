@@ -15,11 +15,27 @@
     <ul>
 {#        <li>Your controller at <code><a href="{{ 'C:/Symfony/GSB_Frais/src/Controller/LigneFraisForfaitController.php'|file_link(0) }}">src/Controller/LigneFraisForfaitController.php</a></code></li>#}
 {#        <li>Your template at <code><a href="{{ 'C:/Symfony/GSB_Frais/templates/ligne_frais_forfait/index.html.twig'|file_link(0) }}">templates/ligne_frais_forfait/index.html.twig</a></code></li>#}
-        {% for lignefraisforfait in lignesfraisforfait %}
+
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li>{{ lignefraisforfait.quantite }} / {{ lignefraisforfait.fichefrais.id }} </li>
-            {% endif %}
-        {% endfor %}
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <td scope="col">#</td>
+                        <th scope="col">Quantite</th>
+                    </tr>
+                    </thead>
+                    {% for lignefraisforfait in lignesfraisforfait %}
+
+                        <tbody>
+                        <tr>
+                            <td>{{ lignefraisforfait.id }}</td>
+                            <td>{{ lignefraisforfait.quantite }}</td>
+                        </tr>
+                        </tbody>
+                        {{ dump(lignefraisforfait) }}
+                    {% endfor %}
+                </table>
+        {% endif %}
     </ul>
 </div>
 {% endblock %}
