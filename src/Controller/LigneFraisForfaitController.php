@@ -21,7 +21,7 @@ class LigneFraisForfaitController extends AbstractController
         $repository = $doctrine->getRepository(LigneFraisForfait::class);
         $lignesFraisForfait = $repository->findBy(['ficheFrais' => $user]);
         return
-            $this->render('ligne_frais_forfait/index.html.twig.', [
+            $this->render('ligne_frais_forfait/index.html.twig', [
             'lignesfraisforfait' => $lignesFraisForfait,
         ]);
     }
