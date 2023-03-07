@@ -3,50 +3,41 @@
 {% block title %}Hello FicheFraisController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {#<style>#}
+    {#    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }#}
+    {#    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }#}
+    {#</style>#}
 
-<div class="example-wrapper">
-    <h1>Liste des FicheFrais</h1>
+    <div class="example-wrapper">
+        <h1>Liste des FicheFrais</h1>
 
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <td scope="col">#</td>
-                        <th scope="col">Date modifié</th>
-                        <th scope="col">Monant</th>
-                        <th scope="col">Mois</th>
-                        <th scope="col">Libelle</th>
-                    </tr>
-                    </thead>
-                    {% for fichefrais in fichesfrais %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <td scope="col">Id</td>
+                    <th scope="col">Date modifié</th>
+                    <th scope="col">Monant</th>
+                    <th scope="col">Mois</th>
+                    <th scope="col">Libelle</th>
+                </tr>
+                </thead>
+                {% for fichefrais in fichesfrais %}
 
                     <tbody>
                     <tr>
-                        <th scope="row"><a href="{{ path('app_ligne_frais_forfait') }}">{{ fichefrais.id }}</a></th>
-                            <td>{{ fichefrais.dateModif |date('Y-m-j') }}</td>
-                            <td>{{ fichefrais.montant }}</td>
-                            <td>{{ fichefrais.mois }}</td>
-                            <td>{{ fichefrais.etat.libelle }}</td>
-
+                        <th scope="row">{{ fichefrais.id }}</th>
+                        <td>{{ fichefrais.dateModif |date('d-m-Y') }}</td>
+                        <td>{{ fichefrais.montant }}</td>
+                        <td>{{ fichefrais.mois }}</td>
+                        <td>{{ fichefrais.etat.libelle }}</td>
                     </tr>
                     </tbody>
-
-{#                       {{ dump(fichefrais.lignefraishorsforfait) }}#}
-
-                    {% endfor %}
-                </table>
-
-
-{#            <li>{{ fichefrais.user.nom }} / {{ fichefrais.dateModif |date('Y-m-j') }} / {{ fichefrais.montant }} / {{ fichefrais.mois }} / {{ fichefrais.etat.libelle }}</li>#}
-            {% endif %}
-
-        {#        <li>Your controller at <code><a href="{{ 'C:/Symfony/GSB_Frais/src/Controller/ListUsersController.php'|file_link(0) }}">src/Controller/ListUsersController.php</a></code></li>#}
-        {#        <li>Your template at <code><a href="{{ 'C:/Symfony/GSB_Frais/templates/list_users/index.html.twig'|file_link(0) }}">templates/list_users/index.html.twig</a></code></li>#}
-</div>
+                {% endfor %}
+            </table>
+            <a href="{{ path('app_ligne_frais_forfait') }}"><button type="button" class="btn btn-primary">Consulter mes FraisForfaits</button></a>
+        {% endif %}
+    </div>
 
 
 {% endblock %}
