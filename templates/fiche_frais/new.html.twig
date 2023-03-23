@@ -3,9 +3,11 @@
 {% block title %}New FicheFrais{% endblock %}
 
 {% block body %}
-    <h1>Create new FicheFrais</h1>
+    <h1>Creation des ligne frais forfaitisés</h1>
 
     {{ include('fiche_frais/_form.html.twig') }}
 
-    <a href="{{ path('app_fiche_frais_index') }}">back to list</a>
+<div class="row m-3">
+    <a href="{{ path('app_fiche_frais_index') }}"><button class="btn btn-primary">Retour</button></a>
+</div>
 {% endblock %}

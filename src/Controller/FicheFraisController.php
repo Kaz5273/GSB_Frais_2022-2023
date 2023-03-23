@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\FicheFrais;
+use App\Entity\FraisForfait;
+use App\Entity\LigneFraisForfait;
+use App\Entity\LigneFraisHorsForfait;
 use App\Form\FicheFraisType;
 use App\Repository\FicheFraisRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,26 +27,64 @@ class FicheFraisController extends AbstractController
 
         return $this->render('fiche_frais/index.html.twig', [
             'fichesfrais' => $fichesfrais,
+
         ]);
+
     }
 
-    #[Route('/new/', name: 'app_fiche_frais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new', name: 'app_fiche_frais_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine ): Response
     {
+
         $ficheFrai = new FicheFrais();
         $form = $this->createForm(FicheFraisType::class, $ficheFrai);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $repository = $doctrine->getRepository(FraisForfait::class);
+
+            $fraisEtape = $repository->findOneBy(['id' => 1]);
+            $lignefraisForfaitEtape = new LigneFraisForfait();
+            $lignefraisForfaitEtape->setQuantite($form->get('ForfaitEtape')->getData());
+            $lignefraisForfaitEtape->setFicheFrais($ficheFrai);
+            $lignefraisForfaitEtape->setFraisForfait($fraisEtape);
+
+            $fraisKilometrique = $repository->findOneBy(['id' => 2]);
+            $ligneFraisForfaitKilometrique = new LigneFraisForfait();
+            $ligneFraisForfaitKilometrique->setQuantite($form->get('ForfaitKilometrique')->getData());
+            $ligneFraisForfaitKilometrique->setFicheFrais($ficheFrai);
+            $ligneFraisForfaitKilometrique->setFraisForfait($fraisKilometrique);
+
+            $fraisNuitee = $repository->findOneBy(['id' => 3]);
+            $ligneFraisForfaitNuitee = new LigneFraisForfait();
+            $ligneFraisForfaitNuitee->setQuantite($form->get('ForfaitNuitee')->getData());
+            $ligneFraisForfaitNuitee->setFicheFrais($ficheFrai);
+            $ligneFraisForfaitNuitee->setFraisForfait($fraisNuitee);
+
+            $fraisRestaurant = $repository->findOneBy(['id' => 4]);
+            $ligneFraisForfaitRestaurant = new LigneFraisForfait();
+            $ligneFraisForfaitRestaurant->setQuantite($form->get('ForfaitRestaurant')->getData());
+            $ligneFraisForfaitRestaurant->setFicheFrais($ficheFrai);
+            $ligneFraisForfaitRestaurant->setFraisForfait($fraisRestaurant);
+
+            dd($lignefraisForfaitEtape);
             $entityManager->persist($ficheFrai);
+            $entityManager->persist($lignefraisForfaitEtape);
+            $entityManager->persist($ligneFraisForfaitKilometrique);
+            $entityManager->persist($ligneFraisForfaitNuitee);
+            $entityManager->persist($ligneFraisForfaitRestaurant);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
+
         }
 
         return $this->renderForm('fiche_frais/new.html.twig', [
             'fiche_frai' => $ficheFrai,
             'form' => $form,
+
         ]);
     }
 
