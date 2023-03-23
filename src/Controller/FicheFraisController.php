@@ -37,7 +37,7 @@ class FicheFraisController extends AbstractController
             $repositoryFiche = $doctrine->getRepository(FicheFrais::class);
 
             $mois = $form->get('mois')->getData();
-            $myFicheFrais = $repositoryFiche->findOneBy(['mois' => $mois]);
+            $myFicheFrais = $repositoryFiche->findOneBy(['mois' => $mois, 'user' => $user]);
             $entityManager->persist($myFicheFrais);
             $entityManager->flush();
         }
