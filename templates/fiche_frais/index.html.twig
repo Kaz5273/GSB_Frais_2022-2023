@@ -11,31 +11,24 @@
     <div class="example-wrapper">
         <h1>Liste des FicheFrais</h1>
 
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <td scope="col">Id</td>
-                    <th scope="col">Date modifié</th>
-                    <th scope="col">Monant</th>
-                    <th scope="col">Mois</th>
-                    <th scope="col">Libelle</th>
-                </tr>
-                </thead>
-                {% for fichefrais in fichesfrais %}
-
-                    <tbody>
-                    <tr>
-                        <th scope="row">{{ fichefrais.id }}</th>
-                        <td>{{ fichefrais.dateModif |date('d-m-Y') }}</td>
-                        <td>{{ fichefrais.montant }}</td>
-                        <td>{{ fichefrais.mois }}</td>
-                        <td>{{ fichefrais.etat.libelle }}</td>
-                    </tr>
-                    </tbody>
-                {% endfor %}
-            </table>
-            <a href="{{ path('app_ligne_frais_forfait') }}"><button type="button" class="btn btn-primary">Consulter mes FraisForfaits</button></a>
+        {{ include('fiche_frais/_formChoice.html.twig') }}
+            {% if bool == true  %}
+            <div class="container">
+                <div class="row">
+                    <h5>Etat: {{ fichefrais.etat.libelle }}</h5>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body bg-light">
+                            <h5 class="card-title">LigneFraisForfait</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        <h5>Selectionner un Mois</h5>
         {% endif %}
     </div>
 

@@ -6,6 +6,7 @@ use App\Entity\FicheFrais;
 use App\Entity\FraisForfait;
 use App\Entity\LigneFraisForfait;
 use App\Entity\LigneFraisHorsForfait;
+use App\Form\ChoiceMoisType;
 use App\Form\FicheFraisType;
 use App\Repository\FicheFraisRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,15 +19,34 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/fichefrais')]
 class FicheFraisController extends AbstractController
 {
-    #[Route('/', name: 'app_fiche_frais_index', methods: ['GET'])]
-    public function index(ManagerRegistry $doctrine): Response
+    #[Route('/', name: 'app_fiche_frais_index', methods: ['GET', 'POST'])]
+    public function index(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $user = $this->getUser();
+        $user= $this->getUser();
         $repository = $doctrine->getRepository(FicheFrais::class);
         $fichesfrais = $repository->findBy(['user' => $user]);
 
+        foreach ($fichesfrais as $uneFicheFrais){
+            $listMois[] = $uneFicheFrais->getMois();
+        }
+        $form = $this->createForm(ChoiceMoisType::class, $listMois, []);
+        $form->handleRequest($request);
+        $bool = false;
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bool = true;
+            $repositoryFiche = $doctrine->getRepository(FicheFrais::class);
+
+            $mois = $form->get('mois')->getData();
+            $myFicheFrais = $repositoryFiche->findOneBy(['mois' => $mois]);
+            $entityManager->persist($myFicheFrais);
+            $entityManager->flush();
+        }
+
         return $this->render('fiche_frais/index.html.twig', [
-            'fichesfrais' => $fichesfrais,
+            'fichefrais' => $myFicheFrais,
+            'listMois' => $listMois,
+            'form' => $form->createView(),
+            'bool' => $bool
 
         ]);
 

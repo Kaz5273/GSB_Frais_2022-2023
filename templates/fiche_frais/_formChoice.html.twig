@@ -1,0 +1,11 @@
+<div class="container">
+    {{ form_start(form) }}
+    <div class="row mb-3">
+        <div class="form-floating">
+            {{ form_row(form.mois) }}
+        </div>
+    </div>
+
+    <button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
+    {{ form_end(form) }}
+</div>

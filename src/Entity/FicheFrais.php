@@ -32,19 +32,19 @@ class FicheFrais
 
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '2')]
-    private ?string $montant = null;
+    private ?string $montant;
 
-    #[ORM\ManyToOne(inversedBy: 'ficheFrais')]
+    #[ORM\ManyToOne(inversedBy: 'ficheFrais', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Etat $etat = null;
+    private ?Etat $etat;
 
     #[ORM\Column(length: 255)]
-    private ?string $mois = null;
+    private ?string $mois;
 
-    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfait::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfait::class, orphanRemoval: true, fetch: 'EAGER')]
     private Collection $ligneFraisForfaits;
 
-    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisHorsForfait::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisHorsForfait::class, orphanRemoval: true, fetch: 'EAGER')]
     private Collection $ligneFraisHorsForfait;
 
     public function __construct()
