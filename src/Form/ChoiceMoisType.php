@@ -20,15 +20,14 @@ class ChoiceMoisType extends AbstractType
                 'mapped' => false,
                 'choices' => $ficheFrais,
                 'choice_label' =>function ($choices, $key, $value){
-
                         return $value;
-
                 },
                 'attr' => [
                     'placeholder' => 'Mois',
+
                 ],
                 'row_attr' => [
-                    'class' => 'form-floating',
+                    'class' => 'form-floating text-center',
                 ],
             ])
         ;

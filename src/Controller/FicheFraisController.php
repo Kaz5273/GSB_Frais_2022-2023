@@ -32,6 +32,7 @@ class FicheFraisController extends AbstractController
         $form = $this->createForm(ChoiceMoisType::class, $listMois, []);
         $form->handleRequest($request);
         $bool = false;
+        $myFicheFrais = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $bool = true;
             $repositoryFiche = $doctrine->getRepository(FicheFrais::class);

@@ -10,25 +10,31 @@
 
     <div class="example-wrapper">
         <h1>Liste des FicheFrais</h1>
-
-        {{ include('fiche_frais/_formChoice.html.twig') }}
+        <div class="container">
+            <div class="">
+            {{ include('fiche_frais/_formChoice.html.twig') }}
+            </div>
             {% if bool == true  %}
-            <div class="container">
-                <div class="row">
-                    <h5>Etat: {{ fichefrais.etat.libelle }}</h5>
-                </div>
+            <div class="row mt-3">
+                <h5>Etat: {{ fichefrais.etat.libelle }}</h5>
             </div>
-            <div class="container">
-                <div class="row">
-                    <div class="card">
-                        <div class="card-body bg-light">
-                            <h5 class="card-title">LigneFraisForfait</h5>
-                        </div>
+            <div class="row">
+                <h5>Montant: {{ fichefrais.montant }}</h5>
+            </div>
+            <div class="row mt-5">
+                <div class="card">
+                    <div class="card-body bg-light">
+                        <h5 class="card-title">LigneFraisForfait</h5>
                     </div>
+
                 </div>
             </div>
-        {% else %}
-        <h5>Selectionner un Mois</h5>
+            {% else %}
+                <h5 class="text-center">Selectionner un Mois</h5>
+        </div>
+
+
+
         {% endif %}
     </div>
 
