@@ -3,40 +3,68 @@
 {% block title %}Hello FicheFraisController!{% endblock %}
 
 {% block body %}
-    {#<style>#}
-    {#    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }#}
-    {#    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }#}
-    {#</style>#}
-
     <div class="example-wrapper">
-        <h1>Liste des FicheFrais</h1>
+        <h1 >Liste des FicheFrais</h1>
         <div class="container">
             <div class="">
-            {{ include('fiche_frais/_formChoice.html.twig') }}
+                {{ include('fiche_frais/_formChoice.html.twig') }}
             </div>
             {% if bool == true  %}
             <div class="row mt-3">
-                <h5>Etat: {{ fichefrais.etat.libelle }}</h5>
-            </div>
-            <div class="row">
-                <h5>Montant: {{ fichefrais.montant }}</h5>
-            </div>
-            <div class="row mt-5">
-                <div class="card">
-                    <div class="card-body bg-light">
-                        <h5 class="card-title">LigneFraisForfait</h5>
-                    </div>
-
+                <div class="col-lg-6">
+                    <h3>Fiche de Frais du mois: {% set myString = fichefrais.mois %}{{ myString|slice(0, 4) ~ '-' ~ myString|slice(4, 2) }} </h3>
+                </div>
+                <div class="col-lg-6">
+                    <h5>Etat: {{ fichefrais.etat.libelle }} depuis le {{ fichefrais.dateModif | date('d-m-Y') }}</h5>
+                    <h5>Montant validé: {{ fichefrais.montant }} €</h5>
                 </div>
             </div>
+            <div class="row mt-5">
+                <h5>Quantite des Frais Forfaitisé</h5>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Frais Etape</th>
+                            <th>Frais Kilométrique</th>
+                            <th>Frais Nuitée</th>
+                            <th>Frais Restaurant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ fichefrais.ligneFraisForfaits[0].quantite }}</td>
+                            <td>{{ fichefrais.ligneFraisForfaits[1].quantite }}</td>
+                            <td>{{ fichefrais.ligneFraisForfaits[2].quantite }}</td>
+                            <td>{{ fichefrais.ligneFraisForfaits[3].quantite }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mt-5">
+                <h5>Frais Hors Forfaitisé</h5>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Libelle</th>
+                        <th>montant</th>
+                        <th>Date</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for horsforfait in fichefrais.ligneFraisHorsForfait %}
+                    <tr>
+                        <td>{{ horsforfait.libelle }}</td>
+                        <td>{{ horsforfait.montant }}</td>
+                        <td>{{ horsforfait.date | date('d-m-Y') }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             {% else %}
-                <h5 class="text-center">Selectionner un Mois</h5>
+                <h5 class="mt-5 text-center">Selectionner un Mois</h5>
         </div>
-
-
-
         {% endif %}
     </div>
-
-
 {% endblock %}

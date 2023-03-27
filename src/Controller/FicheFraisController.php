@@ -6,6 +6,7 @@ use App\Entity\FicheFrais;
 use App\Entity\FraisForfait;
 use App\Entity\LigneFraisForfait;
 use App\Entity\LigneFraisHorsForfait;
+use App\Entity\User;
 use App\Form\ChoiceMoisType;
 use App\Form\FicheFraisType;
 use App\Repository\FicheFraisRepository;
@@ -20,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FicheFraisController extends AbstractController
 {
     #[Route('/', name: 'app_fiche_frais_index', methods: ['GET', 'POST'])]
-    public function index(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    public function afficheFrais(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
     {
         $user= $this->getUser();
         $repository = $doctrine->getRepository(FicheFrais::class);
@@ -35,10 +36,11 @@ class FicheFraisController extends AbstractController
         $myFicheFrais = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $bool = true;
-            $repositoryFiche = $doctrine->getRepository(FicheFrais::class);
 
+            $repositoryFiche = $doctrine->getRepository(FicheFrais::class);
             $mois = $form->get('mois')->getData();
             $myFicheFrais = $repositoryFiche->findOneBy(['mois' => $mois, 'user' => $user]);
+
             $entityManager->persist($myFicheFrais);
             $entityManager->flush();
         }
@@ -144,5 +146,36 @@ class FicheFraisController extends AbstractController
         }
 
         return $this->redirectToRoute('app_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/saisie/{id}', name: 'app_hors_fiche_frais', methods: ['GET', 'POST'])]
+    public function LigneFraisHorsForfait(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, int $id ): Response
+    {
+
+        $ligneFraisHorsForfait = new LigneFraisHorsForfait();
+        $form = $this->createForm(FicheFraisType::class, $ligneFraisHorsForfait);
+        $form->handleRequest($request);
+
+
+        $repository = $doctrine->getRepository(FicheFrais::class);
+        $fichesfrais = $repository->find($id);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $ligneFraisHorsForfait->setFicheFrais($fichesfrais);
+            $ligneFraisHorsForfait->setLibelle($form->get('libelle')->getData());
+            $ligneFraisHorsForfait->setMontant($form->get('montant')->getData());
+            $ligneFraisHorsForfait->setDate($form->get('date')->getData());
+
+            $entityManager->persist($ligneFraisHorsForfait);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
+
+        }
+
+        return $this->renderForm('fiche_frais/new.html.twig', [
+            'ligneFraisHorsForfait' => $ligneFraisHorsForfait,
+            'form' => $form,
+
+        ]);
     }
 }
