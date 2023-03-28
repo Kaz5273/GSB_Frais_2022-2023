@@ -20,6 +20,7 @@ class FicheFraisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+
             ->add('libelle', TextType::class, [
                 'label' => 'Libelle',
                 'attr' => [
@@ -43,6 +44,8 @@ class FicheFraisType extends AbstractType
                     'size' => '50'
                 ],
             ])
+
+
 
         ;
     }

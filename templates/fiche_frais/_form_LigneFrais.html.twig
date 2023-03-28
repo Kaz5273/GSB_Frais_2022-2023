@@ -1,0 +1,37 @@
+<div class="container">
+    {{ form_start(form2) }}
+    <div class="row mb-3">
+        <div class="col-lg-2" >
+            {{ form_label(form2.ForfaitEtape) }}
+        </div>
+        <div>
+            {{ form_widget(form2.ForfaitEtape) }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-lg-2" >
+            {{ form_label(form2.ForfaitKilometrique) }}
+        </div>
+        <div>
+            {{ form_widget(form2.ForfaitKilometrique) }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-lg-2" >
+            {{ form_label(form2.ForfaitNuitee) }}
+        </div>
+        <div>
+            {{ form_widget(form2.ForfaitNuitee) }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-lg-2" >
+            {{ form_label(form2.ForfaitRestaurant) }}
+        </div>
+        <div>
+            {{ form_widget(form2.ForfaitRestaurant) }}
+        </div>
+    </div>
+    <button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
+    {{ form_end(form2) }}
+</div>

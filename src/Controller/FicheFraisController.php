@@ -37,14 +37,10 @@ class FicheFraisController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $bool = true;
 
-            $repositoryFiche = $doctrine->getRepository(FicheFrais::class);
             $mois = $form->get('mois')->getData();
-            $myFicheFrais = $repositoryFiche->findOneBy(['mois' => $mois, 'user' => $user]);
+            $myFicheFrais = $repository->findOneBy(['mois' => $mois, 'user' => $user]);
 
-            $entityManager->persist($myFicheFrais);
-            $entityManager->flush();
         }
-
         return $this->render('fiche_frais/index.html.twig', [
             'fichefrais' => $myFicheFrais,
             'listMois' => $listMois,
@@ -111,6 +107,8 @@ class FicheFraisController extends AbstractController
         ]);
     }
 
+
+
     #[Route('/{id}', name: 'app_fiche_frais_show', methods: ['GET'])]
     public function show(FicheFrais $ficheFrai): Response
     {
@@ -148,34 +146,4 @@ class FicheFraisController extends AbstractController
         return $this->redirectToRoute('app_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/saisie/{id}', name: 'app_hors_fiche_frais', methods: ['GET', 'POST'])]
-    public function LigneFraisHorsForfait(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, int $id ): Response
-    {
-
-        $ligneFraisHorsForfait = new LigneFraisHorsForfait();
-        $form = $this->createForm(FicheFraisType::class, $ligneFraisHorsForfait);
-        $form->handleRequest($request);
-
-
-        $repository = $doctrine->getRepository(FicheFrais::class);
-        $fichesfrais = $repository->find($id);
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $ligneFraisHorsForfait->setFicheFrais($fichesfrais);
-            $ligneFraisHorsForfait->setLibelle($form->get('libelle')->getData());
-            $ligneFraisHorsForfait->setMontant($form->get('montant')->getData());
-            $ligneFraisHorsForfait->setDate($form->get('date')->getData());
-
-            $entityManager->persist($ligneFraisHorsForfait);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
-
-        }
-
-        return $this->renderForm('fiche_frais/new.html.twig', [
-            'ligneFraisHorsForfait' => $ligneFraisHorsForfait,
-            'form' => $form,
-
-        ]);
-    }
 }

@@ -3,9 +3,37 @@
 {% block title %}New FicheFrais{% endblock %}
 
 {% block body %}
-    <h1>Creation des ligne frais hors forfaitisés</h1>
+    <h2>Frais du mois en cours: {{ moisFrais | date('Y-m') }}</h2>
+    <div class="mt-5">
+        <h6>Creation des ligne frais forfaitisés</h6>
+        {{ include('fiche_frais/_form_LigneFrais.html.twig') }}
+    </div>
+    <div class="mt-5">
+        <h6>Creation des ligne frais hors forfaitisés</h6>
+        {{ include('fiche_frais/_form.html.twig') }}
+    </div>
 
-    {{ include('fiche_frais/_form.html.twig') }}
+        {{ dump(ligneFraisHorsForfait) }}
+    {% for ligne in ligneFraisHorsForfait  %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Libelle</th>
+            <th>montant</th>
+            <th>Date</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>{{ ligne.libelle }}</td>
+                <td>{{ ligne.montant }}</td>
+                <td>{{ ligne.date | date('d-m-Y') }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
 
 <div class="row m-3">
     <a href="{{ path('app_fiche_frais_index') }}"><button class="btn btn-primary">Retour</button></a>

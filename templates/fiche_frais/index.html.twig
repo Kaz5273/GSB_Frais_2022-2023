@@ -9,6 +9,7 @@
             <div class="">
                 {{ include('fiche_frais/_formChoice.html.twig') }}
             </div>
+            {{ dump(fichefrais) }}
             {% if bool == true  %}
             <div class="row mt-3">
                 <div class="col-lg-6">
@@ -41,7 +42,7 @@
                 </table>
             </div>
             <div class="row mt-5">
-                <h5>Frais Hors Forfaitisé</h5>
+                <h5>Ligne de Frais Hors Forfaitisé</h5>
                 <table class="table table-striped">
                     <thead>
                     <tr>
