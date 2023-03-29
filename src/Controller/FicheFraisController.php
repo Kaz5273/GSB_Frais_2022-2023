@@ -8,7 +8,7 @@ use App\Entity\LigneFraisForfait;
 use App\Entity\LigneFraisHorsForfait;
 use App\Entity\User;
 use App\Form\ChoiceMoisType;
-use App\Form\FicheFraisType;
+use App\Form\LignesFraisHorsForfaitType;
 use App\Repository\FicheFraisRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -56,7 +56,7 @@ class FicheFraisController extends AbstractController
     {
 
         $ficheFrai = new FicheFrais();
-        $form = $this->createForm(FicheFraisType::class, $ficheFrai);
+        $form = $this->createForm(LignesFraisHorsForfaitType::class, $ficheFrai);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -120,7 +120,7 @@ class FicheFraisController extends AbstractController
     #[Route('/{id}/edit', name: 'app_fiche_frais_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, FicheFrais $ficheFrai, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(FicheFraisType::class, $ficheFrai);
+        $form = $this->createForm(LignesFraisHorsForfaitType::class, $ficheFrai);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

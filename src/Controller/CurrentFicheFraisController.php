@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\FicheFrais;
 use App\Entity\FraisForfait;
 use App\Entity\LigneFraisForfait;
 use App\Entity\LigneFraisHorsForfait;
-use App\Form\FicheFraisType;
+use App\Form\LignesFraisHorsForfaitType;
 use App\Form\LignesFraisForfaitType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,7 +22,8 @@ class CurrentFicheFraisController extends AbstractController
     public function saisie(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
         $moisEnCours = new \DateTime('now');
-
+        $etat = new Etat();
+        $etat->getId();
         //Get fiche du mois en cours
         $user= $this->getUser();
         $repositoryFiche = $doctrine->getRepository(FicheFrais::class);
@@ -29,11 +31,14 @@ class CurrentFicheFraisController extends AbstractController
         $ficheFraisEnCours = $repositoryFiche->findOneBy(['mois' => $mois, 'user' => $user]);
 
         //Saisie FraisForfaitise
-//        if($ficheFraisEnCours == null){
+        if($ficheFraisEnCours == null){
             $fichefrais = new FicheFrais();
-//            $fichefrais->getMois();
-//            $fichefrais->
-//        }
+
+            $fichefrais->setUser($user);
+            $fichefrais->setMois($mois);
+            $fichefrais->setEtat($etat);
+            dd($fichefrais);
+        }
         $form2 = $this->createForm(LignesFraisForfaitType::class, $fichefrais);
         $form2 ->handleRequest($request);
 
@@ -78,7 +83,7 @@ class CurrentFicheFraisController extends AbstractController
 
         //Saisie LigneFraisHorsForfait
         $ligneFraisHorsForfait = new LigneFraisHorsForfait();
-        $form = $this->createForm(FicheFraisType::class, $ligneFraisHorsForfait);
+        $form = $this->createForm(LignesFraisHorsForfaitType::class, $ligneFraisHorsForfait);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -89,6 +94,10 @@ class CurrentFicheFraisController extends AbstractController
             $ligneFraisHorsForfait->setLibelle($form->get('libelle')->getData());
             $ligneFraisHorsForfait->setMontant($form->get('montant')->getData());
             $ligneFraisHorsForfait->setDate($form->get('date')->getData());
+
+//            foreach ($ligneFraisHorsForfait as $uneLigneFraisHorsForfait){
+//                $uneLigneFraisHorsForfait[] = $ligneFraisHorsForfait->getLibelle();
+//            }
 
 
             $entityManager->persist($ligneFraisHorsForfait);
