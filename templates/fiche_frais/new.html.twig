@@ -14,8 +14,6 @@
         {{ include('fiche_frais/_formLigneFraisHorsForfait.html.twig') }}
     </div>
 
-        {{ dump(ligneFraisHorsForfait) }}
-
     <table class="table table-striped">
         <thead>
         <tr>
@@ -25,15 +23,18 @@
 
         </tr>
         </thead>
+        {% for ligne in fichesFrais.ligneFraisHorsForfait %}
         <tbody>
-    {% for ligne in ligneFraisHorsForfait  %}
             <tr>
                 <td>{{ ligne.libelle }}</td>
                 <td>{{ ligne.montant }}</td>
                 <td>{{ ligne.date | date('d-m-Y') }}</td>
+                <td><a href="{{ path('app_lignefraishorsforfait_delete', {'id': ligne.id}) }}">supprimer</a></td>
             </tr>
-    {% endfor %}
+
+
         </tbody>
+        {% endfor %}
     </table>
 
 

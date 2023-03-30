@@ -41,6 +41,7 @@ class FicheFraisController extends AbstractController
             $myFicheFrais = $repository->findOneBy(['mois' => $mois, 'user' => $user]);
 
         }
+
         return $this->render('fiche_frais/index.html.twig', [
             'fichefrais' => $myFicheFrais,
             'listMois' => $listMois,
@@ -87,7 +88,6 @@ class FicheFraisController extends AbstractController
             $ligneFraisForfaitRestaurant->setFicheFrais($ficheFrai);
             $ligneFraisForfaitRestaurant->setFraisForfait($fraisRestaurant);
 
-            dd($lignefraisForfaitEtape);
             $entityManager->persist($ficheFrai);
             $entityManager->persist($lignefraisForfaitEtape);
             $entityManager->persist($ligneFraisForfaitKilometrique);
