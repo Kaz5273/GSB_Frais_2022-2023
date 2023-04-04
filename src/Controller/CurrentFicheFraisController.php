@@ -61,7 +61,9 @@ class CurrentFicheFraisController extends AbstractController
             $fichefrais->addLigneFraisForfait($ligneFraisKilometrique);
             $fichefrais->addLigneFraisForfait($ligneFraisNuitee);
             $fichefrais->addLigneFraisForfait($ligneFraisRestaurant);
-            dd($fichefrais);
+
+            $entityManager->persist($fichefrais);
+            $entityManager->flush();
         }
 
 
@@ -69,38 +71,37 @@ class CurrentFicheFraisController extends AbstractController
         $form2 ->handleRequest($request);
 
         if ($form2->isSubmitted() && $form2->isValid()) {
+
             //Test si la fichefrais existe
                 $repository = $doctrine->getRepository(FraisForfait::class);
 
                 $fraisEtape = $repository->findOneBy(['id' => 1]);
-                $fichefrais->getLigneFraisForfaits()[0]->setQuantite($form2->get('ForfaitEtape'));
                 $lignefraisForfaitEtape = new LigneFraisForfait();
                 $lignefraisForfaitEtape->setQuantite($form2->get('ForfaitEtape')->getData());
-                $fichefrais = $lignefraisForfaitEtape->setQuantite($form2->get('ForfaitEtape')->getData());
+                $fichefrais->getLigneFraisForfaits()[0]->setQuantite($form2->get('ForfaitEtape')->getData());
                 $lignefraisForfaitEtape->setFicheFrais($ficheFraisEnCours);
                 $lignefraisForfaitEtape->setFraisForfait($fraisEtape);
 
                 $fraisKilometrique = $repository->findOneBy(['id' => 2]);
                 $ligneFraisForfaitKilometrique = new LigneFraisForfait();
                 $ligneFraisForfaitKilometrique->setQuantite($form2->get('ForfaitKilometrique')->getData());
-                $fichefrais = $ligneFraisForfaitKilometrique->setQuantite($form2->get('ForfaitKilometrique')->getData());
+                $fichefrais->getLigneFraisForfaits()[1]->setQuantite($form2->get('ForfaitKilometrique')->getData());
                 $ligneFraisForfaitKilometrique->setFicheFrais($ficheFraisEnCours);
                 $ligneFraisForfaitKilometrique->setFraisForfait($fraisKilometrique);
 
                 $fraisNuitee = $repository->findOneBy(['id' => 3]);
                 $ligneFraisForfaitNuitee = new LigneFraisForfait();
                 $ligneFraisForfaitNuitee->setQuantite($form2->get('ForfaitNuitee')->getData());
-                $fichefrais = $ligneFraisForfaitNuitee->setQuantite($form2->get('ForfaitNuitee')->getData());
+                $fichefrais->getLigneFraisForfaits()[2]->setQuantite($form2->get('ForfaitNuitee')->getData());
                 $ligneFraisForfaitNuitee->setFicheFrais($ficheFraisEnCours);
                 $ligneFraisForfaitNuitee->setFraisForfait($fraisNuitee);
 
                 $fraisRestaurant = $repository->findOneBy(['id' => 4]);
                 $ligneFraisForfaitRestaurant = new LigneFraisForfait();
                 $ligneFraisForfaitRestaurant->setQuantite($form2->get('ForfaitRestaurant')->getData());
-                $fichefrais = $ligneFraisForfaitRestaurant->setQuantite($form2->get('ForfaitRestaurant')->getData());
+                $fichefrais->getLigneFraisForfaits()[3]->setQuantite($form2->get('ForfaitRestaurant')->getData());
                 $ligneFraisForfaitRestaurant->setFicheFrais($ficheFraisEnCours);
                 $ligneFraisForfaitRestaurant->setFraisForfait($fraisRestaurant);
-
 
 
             $entityManager->persist($lignefraisForfaitEtape);

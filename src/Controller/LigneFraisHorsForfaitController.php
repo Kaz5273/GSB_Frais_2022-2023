@@ -18,14 +18,4 @@ class LigneFraisHorsForfaitController extends AbstractController
             'controller_name' => 'LigneFraisHorsForfaitController',
         ]);
     }
-    #[Route('/{id}', name: 'app_lignefraishorsforfait_delete', methods: ['POST', 'GET'])]
-    public function delete(Request $request, LigneFraisHorsForfait $ligneFraisHorsForfait, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$ligneFraisHorsForfait->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($ligneFraisHorsForfait);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
-    }
 }

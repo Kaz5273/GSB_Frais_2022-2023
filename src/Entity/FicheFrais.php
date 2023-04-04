@@ -41,7 +41,7 @@ class FicheFrais
     #[ORM\Column(length: 255)]
     private ?string $mois;
 
-    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfait::class, orphanRemoval: true, fetch: 'EAGER')]
+    #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisForfait::class, orphanRemoval: true, fetch: 'EAGER', cascade: ['persist'])]
     private Collection $ligneFraisForfaits;
 
     #[ORM\OneToMany(mappedBy: 'ficheFrais', targetEntity: LigneFraisHorsForfait::class, orphanRemoval: true, fetch: 'EAGER')]

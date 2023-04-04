@@ -20,23 +20,19 @@
             <th>Libelle</th>
             <th>montant</th>
             <th>Date</th>
-
         </tr>
         </thead>
-        {% for ligne in fichesFrais.ligneFraisHorsForfait %}
+
         <tbody>
             <tr>
-                <td>{{ ligne.libelle }}</td>
-                <td>{{ ligne.montant }}</td>
-                <td>{{ ligne.date | date('d-m-Y') }}</td>
-                <td><a href="{{ path('app_lignefraishorsforfait_delete', {'id': ligne.id}) }}">supprimer</a></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
 
 
         </tbody>
-        {% endfor %}
     </table>
-
 
 <div class="row m-3">
     <a href="{{ path('app_fiche_frais_index') }}"><button class="btn btn-primary">Retour</button></a>
