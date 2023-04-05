@@ -12,27 +12,29 @@
         <h6>Creation des ligne frais hors forfaitisés</h6>
         {{ include('fiche_frais/_formLigneFraisHorsForfait.html.twig') }}
     </div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Libelle</th>
-            <th>montant</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-        {% for ligne in fichesFrais.ligneFraisHorsForfait %}
-        <tbody>
+    <div class="mt-3">
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td>{{ ligne.libelle }}</td>
-                <td>{{ ligne.montant }}</td>
-                <td>{{ ligne.date | date('d-m-Y') }}</td>
-                <td><a href="{{ path('app_ligne_frais_hors_forfait_delete', {'id': ligne.id}) }}">Supprimer</a></td>
+                <th>Libelle</th>
+                <th>montant</th>
+                <th>Date</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            {% for ligne in fichesFrais.ligneFraisHorsForfait %}
+            <tbody>
+                <tr>
+                    <td>{{ ligne.libelle }}</td>
+                    <td>{{ ligne.montant }}</td>
+                    <td>{{ ligne.date | date('d-m-Y') }}</td>
+                    <td><a href="{{ path('app_ligne_frais_hors_forfait_delete', {'id': ligne.id}) }}">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 <div class="row m-3">
-    <a href="{{ path('app_fiche_frais_index') }}"><button class="btn btn-primary">Retour</button></a>
+    <a href="{{ path('app_fiche_frais_ListMois') }}"><button class="btn btn-primary">Retour</button></a>
 </div>
 {% endblock %}

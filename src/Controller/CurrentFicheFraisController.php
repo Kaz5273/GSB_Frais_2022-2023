@@ -110,6 +110,7 @@ class CurrentFicheFraisController extends AbstractController
         }
 
         $form2 = $this->createForm(LignesFraisForfaitType::class, $fichefrais);
+        $form2->setData($fichefrais);
         $form2 ->handleRequest($request);
 
         if ($form2->isSubmitted() && $form2->isValid()) {
@@ -122,7 +123,7 @@ class CurrentFicheFraisController extends AbstractController
             $entityManager->persist($fichefrais);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_fiche_frais_ListMois', [], Response::HTTP_SEE_OTHER);
 
         }
 
@@ -162,6 +163,8 @@ class CurrentFicheFraisController extends AbstractController
             $ligneFraisHorsForfaitRepository->remove($ligneFraisHorsForfait, true);
         }
 
-        return $this->redirectToRoute('app_fiche_frais_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_saisie_fiche_frais', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }
