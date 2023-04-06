@@ -17,41 +17,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 #[Route('/fichefrais')]
 class FicheFraisController extends AbstractController
 {
-//    #[Route('/', name: 'app_fiche_frais_index', methods: ['GET', 'POST'])]
-//    public function afficheFrais(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
-//    {
-//        $user= $this->getUser();
-//        $repository = $doctrine->getRepository(FicheFrais::class);
-//        $fichesfrais = $repository->findBy(['user' => $user]);
-//
-//        foreach ($fichesfrais as $uneFicheFrais){
-//            $listMois[] = $uneFicheFrais->getMois();
-//        }
-//        $form = $this->createForm(ChoiceMoisType::class, $listMois, []);
-//        $form->handleRequest($request);
-//        $bool = false;
-//        $myFicheFrais = [];
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $bool = true;
-//
-//            $mois = $form->get('mois')->getData();
-//            $myFicheFrais = $repository->findOneBy(['mois' => $mois, 'user' => $user]);
-//
-//        }
-//
-//        return $this->render('fiche_frais/index.html.twig', [
-//            'fichefrais' => $myFicheFrais,
-//            'listMois' => $listMois,
-//            'form' => $form->createView(),
-//            'bool' => $bool
-//
-//        ]);
-//
-//    }
 
     #[Route('/', name: 'app_fiche_frais_index', methods: ['GET'])]
     public function index(ManagerRegistry $doctrine): Response

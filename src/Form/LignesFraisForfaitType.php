@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class LignesFraisForfaitType extends AbstractType
 {
@@ -19,7 +20,6 @@ class LignesFraisForfaitType extends AbstractType
 
         $builder
             ->add('ForfaitEtape', IntegerType::class, [
-                'empty_data' => 0,
                 'label' => 'Frais etape',
                 'attr' => [
                     'placeholder' => 'Frais etape',

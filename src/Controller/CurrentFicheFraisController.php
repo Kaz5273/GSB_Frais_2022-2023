@@ -18,7 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 class CurrentFicheFraisController extends AbstractController
 {
     #[Route('/fichefraisMois', name: 'app_fiche_frais_ListMois', methods: ['GET', 'POST'])]
@@ -156,7 +158,7 @@ class CurrentFicheFraisController extends AbstractController
 
         ]);
     }
-    #[Route('/lignefraishorsforfait/{id}', name: 'app_ligne_frais_hors_forfait_delete', methods: ['POST', 'GET'])]
+    #[Route('/lignefraishorsforfait/{id}', name: 'app_ligne_frais_hors_forfait_delete', methods: ['POST'])]
     public function delete(Request $request, LigneFraisHorsForfait $ligneFraisHorsForfait, LigneFraisHorsForfaitRepository $ligneFraisHorsForfaitRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ligneFraisHorsForfait->getId(), $request->request->get('_token'))) {

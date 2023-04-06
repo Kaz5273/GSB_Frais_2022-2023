@@ -27,7 +27,11 @@
                     <td>{{ ligne.libelle }}</td>
                     <td>{{ ligne.montant }}</td>
                     <td>{{ ligne.date | date('d-m-Y') }}</td>
-                    <td><a href="{{ path('app_ligne_frais_hors_forfait_delete', {'id': ligne.id}) }}">Supprimer</a></td>
+                    <td><form method="post" action="{{ path('app_ligne_frais_hors_forfait_delete', {'id': ligne.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ligne.id) }}">
+                            <button class="btn btn-primary">Supprimer</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -38,3 +42,5 @@
     <a href="{{ path('app_fiche_frais_ListMois') }}"><button class="btn btn-primary">Retour</button></a>
 </div>
 {% endblock %}
+
+

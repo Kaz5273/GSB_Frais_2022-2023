@@ -39,10 +39,14 @@ class LignesFraisHorsForfaitType extends AbstractType
 
             ])
             ->add('date', DateType::class, [
+                'widget' => 'single_text',
                 'label' => 'Date de modification',
                 'attr' => [
-                    'placeholder' => 'Précisez la date du dernier bilan ou noter NC pour non connu',
-                    'size' => '50'
+                    'size' => '75'
+                ],
+                'required' => false,
+                'row_attr' => [
+                    'class' => 'form-floating',
                 ],
             ])
             ->add('add', SubmitType::class, [

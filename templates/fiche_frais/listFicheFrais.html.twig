@@ -31,7 +31,7 @@
                 <td>{{ fichefrais.montant }}</td>
                 <td>{{ fichefrais.mois }}</td>
                 <td>{{ fichefrais.etat.libelle }}</td>
-                <td><a href="{{ path('app_fiche_frais_delete', {'id': fichefrais.id}) }}">Supprimer</a></td>
+                <td><a href="{{ path('', {'id': fichefrais.id}) }}">show</a></td>
             </tr>
             </tbody>
         {% endfor %}
