@@ -5,12 +5,15 @@
 {% block body %}
     <h1>FicheFrais</h1>
 
-
     <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ fiche_frai.id }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ fiche_frai.etat.libelle }}</td>
             </tr>
             <tr>
                 <th>NbJustificatifs</th>

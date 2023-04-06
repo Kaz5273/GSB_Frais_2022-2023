@@ -2,7 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Etat;
 use App\Entity\FicheFrais;
+use App\Entity\Piece;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,8 +20,14 @@ class FicheFraisType extends AbstractType
             ->add('dateModif')
             ->add('montant')
             ->add('mois')
-            ->add('user')
-            ->add('etat')
+            ->add('etat', EntityType::class, [
+                'class' => Etat::class,
+                'query_builder' => function (EntityRepository $p) {
+                    return $p->createQueryBuilder('u')
+                        ->orderBy('u.libelle', 'ASC');
+                },
+                'choice_label' => 'libelle'
+            ])
         ;
     }
 

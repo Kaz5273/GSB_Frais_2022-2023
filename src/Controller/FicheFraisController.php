@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_USER')]
+#[IsGranted('ROLE_ADMIN')]
 #[Route('/fichefrais')]
 class FicheFraisController extends AbstractController
 {
@@ -29,7 +29,7 @@ class FicheFraisController extends AbstractController
     {
         $user = $this->getUser();
         $repository = $doctrine->getRepository(FicheFrais::class);
-        $fichesfrais = $repository->findBy(['user' => $user]);
+        $fichesfrais = $repository->findAll();
 
         return $this->render('fiche_frais/listFicheFrais.html.twig', [
             'fichesfrais' => $fichesfrais,

@@ -24,7 +24,12 @@
         </div>
         <h1><a href="#" class="logo">GSB-Frais</a></h1>
         <ul class="list-unstyled components mb-5">
-            {% if app.user %}
+            {% if is_granted('ROLE_USER') == null %}
+            <li class="nav-item">
+                <a href="{{ path('app_login') }}"><span class="fa fa-user mr-3"></span>Se Connecter</a>
+            </li>
+            {% endif %}
+            {% if is_granted('ROLE_USER') %}
                 <li class="nav-item">
                     <a href="{{ path('app_list_users') }}"><span class="fa fa-home mr-3"></span> Accueil</a>
                 </li>
@@ -35,12 +40,13 @@
                     <a href="{{ path('app_fiche_frais_ListMois') }}"><span class="fa fa-sticky-note mr-3"></span>Mes Fiches
                         Frais</a>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a href="{{ path('app_fiche_frais_index') }}"><span class="fa fa-sticky-note mr-3"></span>Liste de Fichefrais</a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                     <a href="{{ path('app_logout') }}"><span class="fa fa-user mr-3"></span>Deconnexion</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a href="{{ path('app_login') }}"><span class="fa fa-user mr-3"></span>Se Connecter</a>
                 </li>
             {% endif %}
         </ul>

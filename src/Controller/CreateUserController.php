@@ -20,17 +20,19 @@ class CreateUserController extends AbstractController
     public function index(ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
     {
         $newUser = new User(); //j'instancie un objet de la classe User
-        $newUser->setLogin('elisabeth'); //je lui affecte la valeur 'elisabeth2' à son attribut Login
-        $newUser->setNom('Windsor'); //je lui affecte la valeur 'Windsor' à son attribut Nom
-        $newUser->setPrenom('Elisabeth'); //je lui affecte la valeur 'Elisabeth' à son attribut Prenom
+        $newUser->setLogin('admin'); //je lui affecte la valeur 'elisabeth2' à son attribut Login
+        $newUser->setNom('Allard'); //je lui affecte la valeur 'Windsor' à son attribut Nom
+        $newUser->setPrenom('Kazuki'); //je lui affecte la valeur 'Elisabeth' à son attribut Prenom
         $newUser->setCp('74000'); //je lui affecte la valeur '74000' à son attribut cp
-        $newUser->setVille('London'); //je lui affecte la valeur 'London' à son attribut Ville
-        $newUser->setAdresse('Bukingam Palace');
+        $newUser->setVille('Annecy'); //je lui affecte la valeur 'London' à son attribut Ville
+        $newUser->setAdresse('4 rue louis revon');
+        $newUser->setRoles(['ROLE_ADMIN']);
+        $newUser->setOldId('1adm');
         //pour affecter une date à l'attribut DateEmbauche, on instancie un nouvel objet DateTime
         //auquel on passe la date au format 'YYYY-MM-DD'
-        $newUser->setDateEmbauche(new \DateTime('2022-09-13'));
+        $newUser->setDateEmbauche(new \DateTime('2023-04-06'));
 
-        $plaintextpassword = 'KingCharles3'; //on stocke le mot de passe en clair dans une variable
+        $plaintextpassword = 'admin'; //on stocke le mot de passe en clair dans une variable
         $hashedpassword = $passwordHasher->hashPassword($newUser, $plaintextpassword); //on hache le mot de passe
         //grace à la méthode hashPassword()
         $newUser->setPassword($hashedpassword); //j'affecte le mot de passe haché à l'attribut Password de mon objet

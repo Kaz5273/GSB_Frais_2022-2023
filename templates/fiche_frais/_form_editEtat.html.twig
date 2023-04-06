@@ -1,0 +1,28 @@
+{{ form_start(form) }}
+<div class="row mb-3">
+    <div class="form-floating">
+        {{ form_row(form.nbJustificatifs) }}
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="form-floating">
+        {{ form_row(form.dateModif) }}
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="form-floating">
+        {{ form_row(form.montant) }}
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="form-floating">
+        {{ form_row(form.mois) }}
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="form-floating">
+        {{ form_row(form.etat) }}
+    </div>
+</div>
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
