@@ -21,9 +21,11 @@ class LignesFraisForfaitType extends AbstractType
         $builder
             ->add('ForfaitEtape', IntegerType::class, [
                 'label' => 'Frais etape',
+                'empty_data' => 0,
                 'attr' => [
                     'placeholder' => 'Frais etape',
-                    'value' => $currentEtape
+                    'value' => $currentEtape,
+                    'min' => 0
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
@@ -33,10 +35,12 @@ class LignesFraisForfaitType extends AbstractType
             ])
             ->add('ForfaitKilometrique', IntegerType::class, [
                 'empty_data' => 0,
+
                 'label' => 'Frais kilometrique',
                 'attr' => [
                     'placeholder' => 'Frais kilometrique',
-                    'value' => $currentKilometrique
+                    'value' => $currentKilometrique,
+                    'min' => 0
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
@@ -48,7 +52,8 @@ class LignesFraisForfaitType extends AbstractType
                 'label' => 'Frais nuitée',
                 'attr' => [
                     'placeholder' => 'Frais nuitée',
-                    'value' => $currentNuitee
+                    'value' => $currentNuitee,
+                    'min' => 0
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
@@ -60,7 +65,8 @@ class LignesFraisForfaitType extends AbstractType
                 'label' => 'Frais restaurant',
                 'attr' => [
                     'placeholder' => 'Frais restaurant',
-                    'value' => $currentRestaurant
+                    'value' => $currentRestaurant,
+                    'min' => 0
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
